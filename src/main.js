@@ -1,6 +1,6 @@
 // global styles
-import "./style.css";
-import "./page.css";
+import "./taleem.css";
+import "./app.css";
 
 // taleem-player styles (proper export usage)
 import "taleem-player/css";
