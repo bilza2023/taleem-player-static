@@ -3,13 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <title>Taleem Player</title>
-
+  <link rel="stylesheet" href="./dist/taleem-player-app.css" />
 </head>
-
 <body>
-
-  <div id="app"></div>
-
+  <div id="app"></div><!-- Player mount -->
+  <!-- Basic controls (editable UI layer) -->
   <div class="nav-test">
     <button id="play-btn">▶</button>
     <button id="pause-btn">⏸</button>
@@ -27,7 +25,58 @@
       />
     </div>
   </div>
+  <script type="module">
+    import {
+      createTaleemPlayer,
+      resolveAssetPaths,
+      resolveBackground,
+      getDeckEndTime,
+      createSilentTimer,
+      createAudioTimer,
+      startLoop
+    } from "./dist/taleem-player-app.js";
 
-  <script type="module" src="/src/main.js"></script>
+    async function init() {
+      // -------- Environment config (edit only this section) --------
+      const CONTENT_BASE = "/dist";           // "" for Vite public root
+      const deckUrl =  `${CONTENT_BASE}/decks/test.json`;
+      // --------------------------------------------------------------
+      const res = await fetch(deckUrl);
+      if (!res.ok) {
+        document.body.innerHTML = "<h2>Deck not found</h2>";
+        throw new Error("Deck not found");
+      }
+      const deck = await res.json();
+
+      // Resolve asset paths
+      resolveAssetPaths(deck, `${CONTENT_BASE}/images/`);
+      resolveBackground(deck, `${CONTENT_BASE}/images/`);
+
+      // Select timer (audio or silent)
+      const timer = createAudioTimer(`${CONTENT_BASE}/audio/music.mp3`);
+    
+      // Create player
+      const player = createTaleemPlayer({
+        mount: "#app",
+        deck
+      });
+
+      const duration = getDeckEndTime(deck);
+      // Start orchestration
+      startLoop({
+        player,
+        timer,
+        duration,
+        ui: {
+          playBtn: document.getElementById("play-btn"),
+          pauseBtn: document.getElementById("pause-btn"),
+          stopBtn: document.getElementById("stop-btn"),
+          scrub: document.getElementById("scrub"),
+          timeEl: document.getElementById("time")
+        }
+      });
+    }
+    init();
+  </script>
 </body>
 </html>

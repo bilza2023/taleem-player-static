@@ -1,8 +1,13 @@
 {
-  "name": "taleem-player-static",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "name": "taleem-player-app",
+  "version": "1.0.2",
+  "description": "Taleem Player Runtime Wrapper",
+  "type": "module",
+  "main": "dist/taleem-player-app.js",
+  "module": "dist/taleem-player-app.js",
+  "exports": {
+    ".": "./dist/taleem-player-app.js"
+  },
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -15,8 +20,9 @@
     "vite": "^7.3.1"
   },
   "dependencies": {
+    "howler": "^2.2.4",
     "katex": "^0.16.28",
     "taleem-pam": "^1.0.1",
-    "taleem-player": "^1.0.14"
+    "taleem-player": "^1.0.15"
   }
 }

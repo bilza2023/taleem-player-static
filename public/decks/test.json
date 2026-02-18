@@ -3,8 +3,8 @@
     "name": "Basic English Vocabulary – Demo",
     "background": {
       "backgroundColor": "#111111",
-      "backgroundImage": null,
-      "backgroundImageOpacity": 0.3
+      "backgroundImage": "box.webp",
+      "backgroundImageOpacity": 0.2
     },
     "deck": [
       {
