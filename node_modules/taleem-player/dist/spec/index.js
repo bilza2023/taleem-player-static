@@ -206,7 +206,6 @@ var goldenDeckV1 = {
 
 // src/spec/slideTypesV1.js
 var SLIDE_TYPES_V1 = [
-  "titleSlide",
   "titleAndSubtitle",
   "titleAndPara",
   "bulletList",
@@ -217,14 +216,10 @@ var SLIDE_TYPES_V1 = [
   "imageLeftBulletsRight",
   "imageRightBulletsLeft",
   "table",
-  "statistic",
-  "donutChart",
-  "bigNumber",
   "barChart",
+  "progressbar",
   "quoteSlide",
-  "quoteWithImage",
-  "cornerWordsSlide",
-  "contactSlide",
+  "keyIdeasSlide",
   "fillImage",
   "eq"
 ];

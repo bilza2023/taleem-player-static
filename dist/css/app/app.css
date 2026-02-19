@@ -1,0 +1,86 @@
+body {
+  margin: 0;
+  font-family: system-ui, sans-serif;
+}
+
+/* slide area */
+#app {
+  height: 100vh;
+  box-sizing: border-box;
+}
+
+/* footer navigation */
+.nav-test {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 90px;
+
+  transition: opacity 0.5s ease;
+
+  backdrop-filter: blur(0px);
+  -webkit-backdrop-filter: blur(0px);
+
+  background: rgba(187, 187, 188, 0.85);
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0 1rem;
+
+  z-index: 999999;
+}
+
+.nav-test span {
+  font-weight: 700;
+  min-width: 80px;
+}
+
+/* range wrapper grows */
+input[type="range"] {
+  flex: 1;
+  height: 40px;
+  background: transparent;
+  cursor: pointer;
+}
+
+/* remove default styling */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+/* WebKit track (Chrome, Edge, Safari) */
+input[type="range"]::-webkit-slider-runnable-track {
+  height: 10px;
+  border-radius: 6px;
+  background: #444;
+}
+
+/* WebKit thumb */
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  background: #111;
+  margin-top: -5px; /* centers thumb */
+}
+
+/* Firefox track */
+input[type="range"]::-moz-range-track {
+  height: 10px;
+  border-radius: 6px;
+  background: #444;
+}
+
+/* Firefox thumb */
+input[type="range"]::-moz-range-thumb {
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  background: #111;
+  border: none;
+}

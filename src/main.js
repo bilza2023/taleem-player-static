@@ -1,12 +1,15 @@
 // ----------------------------------
 // Global styles (bundled into build)
 // ----------------------------------
-import "./taleem.css";
-import "./app.css";
-
+// import "./app.css";        // controls UI only
 import "taleem-player/css";
+// import "taleem-player/css/app";
+import "taleem-player/css/light";
 import "taleem-player/css/dark";
+import "taleem-player/css/paper";
 import "katex/dist/katex.min.css";
+
+
 
 // ----------------------------------
 // Public Engine Re-Exports
