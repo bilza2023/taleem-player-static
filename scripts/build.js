@@ -1,8 +1,30 @@
+
 import { build } from "esbuild";
 import fs from "fs";
 import path from "path";
 
 const dist = "dist";
+const publicDir = "public";
+
+// -----------------
+// Utility: Recursive Copy
+// -----------------
+function copyDir(src, dest) {
+  if (!fs.existsSync(src)) return;
+
+  fs.mkdirSync(dest, { recursive: true });
+
+  for (const file of fs.readdirSync(src)) {
+    const srcPath = path.join(src, file);
+    const destPath = path.join(dest, file);
+
+    if (fs.statSync(srcPath).isDirectory()) {
+      copyDir(srcPath, destPath);
+    } else {
+      fs.copyFileSync(srcPath, destPath);
+    }
+  }
+}
 
 // -----------------
 // Clean dist
@@ -54,5 +76,11 @@ fs.readdirSync(themesSrc).forEach(file => {
   const destFile = path.join(themesDest, file);
   fs.copyFileSync(srcFile, destFile);
 });
+
+// -----------------
+// Copy full public folder → dist
+// (index.html + assets + anything else)
+// -----------------
+copyDir(publicDir, dist);
 
 console.log("✔ taleem-player-app build complete");

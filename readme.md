@@ -1,176 +1,164 @@
 
-# 📘 Taleem Player App — Usage Guide
+# 📘 Taleem Player — Usage Guide (v2)
 
-Taleem Player App allows you to play Taleem slide decks with audio using just **two files**:
+Taleem Player lets you run Taleem slide decks in the browser using a simple HTML template and a built JS file.
+
+After building the project, everything needed to run the player is inside:
 
 ```
-taleem-player-app.js
-taleem-player-app.css
+dist/
 ```
 
-No installation required.
-Just copy the files and use the template below.
+You deploy or serve the **dist folder only**.
 
 ---
 
-# 📂 Step 1 — Folder Structure
-
-Place the files like this:
+# 📂 Final Folder Structure (After Build)
 
 ```
-your-project/
+dist/
   index.html
-  dist/
-    taleem-player-app.js
-    taleem-player-app.css
-  decks/
-    test.json
-  audio/
-    music.mp3
-  images/
+  taleem-player-app.js
+  taleem-player-app.css
+  css/
+    app/
+      app.css
+    themes/
+      default.css
+  assets/
+    decks/
+      demo.json
+    images/
+    audio/
+      music.mp3
 ```
 
-If you do not have your own deck yet, use:
+`dist/` is your website root.
 
-```
-decks/test.json
-```
-
-If you do not have your own audio yet, use:
-
-```
-audio/music.mp3
-```
+You must open or serve from inside `dist`.
 
 ---
 
-# 🧩 Step 2 — Copy This `index.html`
+# ▶️ How To Run
 
-Create a file named `index.html` and paste this:
+### Option 1 — Simple Local Server
+
+```bash
+cd dist
+npx serve .
+```
+
+or
+
+```bash
+cd dist
+npx http-server .
+```
+
+Then open the displayed URL.
+
+---
+
+### Option 2 — Deploy
+
+Upload the **contents of dist** to your hosting root.
+
+Do NOT upload `src/`, `public/`, or project files.
+
+---
+
+# 🧩 The HTML Template
+
+Your `dist/index.html` is the official template.
+
+Important:
+
+• Do not remove `#app`
+• Do not change element IDs
+• Only edit the ENVIRONMENT CONFIG block
+
+---
+
+# 🔵 Environment Configuration
+
+Inside `index.html`:
+
+```js
+const CONTENT_BASE = "./assets";
+const deckUrl = `${CONTENT_BASE}/decks/demo.json`;
+const audioUrl = `${CONTENT_BASE}/audio/music.mp3`;
+const useAudio = true;
+```
+
+This is the only section you should edit.
+
+---
+
+# 📦 Assets Folder Contract
+
+The player expects:
+
+```
+assets/
+  decks/
+  images/
+  audio/
+```
+
+### Required
+
+• `assets/decks/` must contain your deck JSON
+
+### Required if deck uses images
+
+• `assets/images/`
+
+### Required only if `useAudio = true`
+
+• `assets/audio/`
+
+If you do not want audio:
+
+```js
+const useAudio = false;
+```
+
+Then the audio folder is not required.
+
+---
+
+# 🎨 CSS Order (Important)
+
+Keep this order exactly:
 
 ```html
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <title>Taleem Player</title>
-
-  <!-- Player Styles -->
-  <link rel="stylesheet" href="./dist/taleem-player-app.css" />
-</head>
-
-<body>
-
-  <!-- Player Mount -->
-  <div id="app"></div>
-
-  <!-- Basic Controls -->
-  <div class="nav-test">
-    <button id="play-btn">▶</button>
-    <button id="pause-btn">⏸</button>
-    <button id="stop-btn">⏹</button>
-
-    <span id="time">0.0s</span>
-
-    <div class="scrub-wrap">
-      <input
-        id="scrub"
-        type="range"
-        min="0"
-        max="1"
-        step="0.1"
-      />
-    </div>
-  </div>
-
-  <script type="module">
-    import {
-      createTaleemPlayer,
-      resolveAssetPaths,
-      resolveBackground,
-      getDeckEndTime,
-      createAudioTimer,
-      startLoop
-    } from "./dist/taleem-player-app.js";
-
-    async function init() {
-
-      // 🔵 CHANGE THIS to load your own deck
-      const deckUrl = "/decks/test.json";
-
-      const res = await fetch(deckUrl);
-      if (!res.ok) {
-        document.body.innerHTML = "<h2>Deck not found</h2>";
-        throw new Error("Deck not found");
-      }
-
-      const deck = await res.json();
-
-      // Fix image paths
-      resolveAssetPaths(deck, "/images/");
-      resolveBackground(deck, "/images/");
-
-      // 🔊 Audio file (change if needed)
-      const timer = createAudioTimer("/audio/music.mp3");
-
-      // Create player
-      const player = createTaleemPlayer({
-        mount: "#app",
-        deck
-      });
-
-      const duration = getDeckEndTime(deck);
-
-      // Start playback
-      startLoop({
-        player,
-        timer,
-        duration,
-        ui: {
-          playBtn: document.getElementById("play-btn"),
-          pauseBtn: document.getElementById("pause-btn"),
-          stopBtn: document.getElementById("stop-btn"),
-          scrub: document.getElementById("scrub"),
-          timeEl: document.getElementById("time")
-        }
-      });
-    }
-
-    init();
-  </script>
-
-</body>
-</html>
+<link rel="stylesheet" href="./css/app/app.css" />
+<link rel="stylesheet" href="./taleem-player-app.css" />
+<link rel="stylesheet" href="./css/themes/default.css" />
 ```
 
----
+Why:
 
-# ▶️ Step 3 — Open in Browser
+1. app.css → layout
+2. taleem-player-app.css → core slide styles
+3. theme → visual overrides
 
-Simply open `index.html` in your browser.
-
-The player will:
-
-* Load the deck from `/decks/test.json`
-* Load the audio from `/audio/music.mp3`
-* Display slides
-* Sync playback with sound
-* Enable play, pause, stop, and scrub
+Changing order may break styling.
 
 ---
 
 # 🔁 To Use Your Own Deck
 
-1. Place your deck inside:
+1. Place your JSON file inside:
 
 ```
-decks/
+dist/assets/decks/
 ```
 
-2. Change this line:
+2. Update:
 
 ```js
-const deckUrl = "/decks/your-file.json";
+const deckUrl = `${CONTENT_BASE}/decks/your-file.json`;
 ```
 
 3. Reload the page.
@@ -179,37 +167,40 @@ const deckUrl = "/decks/your-file.json";
 
 # 🔊 To Use Your Own Audio
 
-1. Place your audio file inside:
+1. Place audio inside:
 
 ```
-audio/
+dist/assets/audio/
 ```
 
-2. Change this line:
+2. Update:
 
 ```js
-const timer = createAudioTimer("/audio/your-audio-file.mp3");
+const audioUrl = `${CONTENT_BASE}/audio/your-audio.mp3`;
 ```
 
-3. Reload the page.
+3. Reload.
 
 ---
 
-# 📌 Important Notes
+# 🧠 Important Architecture Notes
 
-* Always include `taleem-player-app.css`
-* Make sure deck, images, and audio folders exist
-* Audio is optional, but recommended
-* The player works best when audio duration matches slide timing
+• `src/` is development only
+• `public/` is input
+• `dist/` is production output
+• You always run from `dist/`
+• Never reference `/dist/...` in runtime URLs
+
+`dist` is the final app.
 
 ---
 
-# ✅ That’s It
+# ✅ Summary
 
-Copy files
-Copy template
-Set deck path
-Set audio path
-Open in browser
+Build project
+Serve dist
+Edit ENV block
+Place deck in assets
+Place images/audio if needed
 
-Done. 🔥
+Done.

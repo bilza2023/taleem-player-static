@@ -38,49 +38,14 @@ body {
   min-width: 80px;
 }
 
-/* range wrapper grows */
-input[type="range"] {
+/* scrub wrapper must grow */
+.scrub-wrap {
   flex: 1;
-  height: 40px;
-  background: transparent;
-  cursor: pointer;
+  display: flex;
 }
 
-/* remove default styling */
-input[type="range"] {
-  -webkit-appearance: none;
-  appearance: none;
-}
-
-/* WebKit track (Chrome, Edge, Safari) */
-input[type="range"]::-webkit-slider-runnable-track {
-  height: 10px;
-  border-radius: 6px;
-  background: #444;
-}
-
-/* WebKit thumb */
-input[type="range"]::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  height: 20px;
-  width: 20px;
-  border-radius: 50%;
-  background: #111;
-  margin-top: -5px; /* centers thumb */
-}
-
-/* Firefox track */
-input[type="range"]::-moz-range-track {
-  height: 10px;
-  border-radius: 6px;
-  background: #444;
-}
-
-/* Firefox thumb */
-input[type="range"]::-moz-range-thumb {
-  height: 20px;
-  width: 20px;
-  border-radius: 50%;
-  background: #111;
-  border: none;
+/* range must fill wrapper */
+.scrub-wrap input[type="range"] {
+  width: 100%;
+  flex: 1;
 }
